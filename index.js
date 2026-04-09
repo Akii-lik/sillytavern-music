@@ -14,6 +14,11 @@ let isShuffled = false;
 let shuffleOrder = [];
 
 jQuery(document).ready(async () => {
+    // 等待 extension_settings 准备好
+    while (!window.extension_settings) {
+        await new Promise(resolve => setTimeout(resolve, 100));
+    }
+
     if (!window.extension_settings[EXT_NAME]) {
         window.extension_settings[EXT_NAME] = { ...defaultSettings };
     }
