@@ -1,0 +1,12 @@
+{
+    "display_name": "Music Player",
+    "loading_order": 10,
+    "requires": [],
+    "optional": [],
+    "js": "index.js",
+    "css": "style.css",
+    "author": "水域冷却",
+    "version": "1.0.0",
+    "homePage": "https://github.com/Akii-lik/sillytavern-music",
+    "auto_update": true
+}
