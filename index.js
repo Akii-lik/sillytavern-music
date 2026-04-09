@@ -1,6 +1,3 @@
-import { saveSettingsDebounced } from '../../../script.js';
-import { extension_settings } from '../../extensions.js';
-
 const EXT_NAME = 'music-player';
 
 const defaultSettings = {
@@ -17,8 +14,8 @@ let isShuffled = false;
 let shuffleOrder = [];
 
 jQuery(async () => {
-    if (!extension_settings[EXT_NAME]) {
-        extension_settings[EXT_NAME] = { ...defaultSettings };
+    if (!window.extension_settings[EXT_NAME]) {
+        window.extension_settings[EXT_NAME] = { ...defaultSettings };
     }
 
     loadSettings();
@@ -28,7 +25,7 @@ jQuery(async () => {
 });
 
 function loadSettings() {
-    const s = extension_settings[EXT_NAME];
+    const s = window.extension_settings[EXT_NAME];
     playlist = s.playlist || [];
     isShuffled = s.shuffle || false;
     audio.volume = s.volume ?? 0.7;
@@ -36,13 +33,12 @@ function loadSettings() {
 }
 
 function saveSettings() {
-    const s = extension_settings[EXT_NAME];
-    // 本地文件的 blob URL 刷新后失效，不持久化 src
+    const s = window.extension_settings[EXT_NAME];
     s.playlist = playlist.map(t => t.type === 'url' ? t : { ...t, src: null });
     s.shuffle = isShuffled;
     s.volume = audio.volume;
     s.currentIndex = currentIndex;
-    saveSettingsDebounced();
+    window.saveSettingsDebounced();
 }
 
 function injectUI() {
@@ -248,7 +244,6 @@ function playNext() {
 
 function playPrev() {
     if (!playlist.length) return;
-    // 如果已经播放超过3秒，重播当前曲目
     if (audio.currentTime > 3) {
         audio.currentTime = 0;
         return;
