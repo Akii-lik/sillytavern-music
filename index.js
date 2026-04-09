@@ -13,7 +13,7 @@ let playlist = [];
 let isShuffled = false;
 let shuffleOrder = [];
 
-jQuery(async () => {
+jQuery(document).ready(async () => {
     if (!window.extension_settings[EXT_NAME]) {
         window.extension_settings[EXT_NAME] = { ...defaultSettings };
     }
